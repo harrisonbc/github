@@ -17,11 +17,16 @@ set -a
 source variables.env
 
 
-# Download Seed Image once it is created
+# Download Seed Image once it is created 
 # 
 # wget https://rancher.harrison.local/elemental/seedimage/xjdj84sgggjxd9hdw6kh45lhsdktmhxw4tkzf6p89xjlhnk2kctpqt/fire-nodes-2025-09-22T13:27:38Z.iso
 kubectl wait --for=condition=ready pod -n fleet-default fire-img
-wget --no-check-certificate 'kubectl get seedimage -n fleet-default fire-img -o jsonpath="{.status.downloadURL}"' -O $LOCATION/$DISKIMAGE
+
+if [ ! -f $LOCATION/$DISKIMAGE ]; then 
+
+    wget --no-check-certificate `kubectl get seedimage -n fleet-default fire-img -o jsonpath="{.status.downloadURL}"` -O $LOCATION/$DISKIMAGE
+
+fi
 
 ####################################################
 # Create VMs
@@ -62,6 +67,7 @@ for VM in $IPS; do
     virt-install \
         --virt-type kvm  \
         --name $VMNAME$I \
+        --boot uefi \
         --memory $MEMORY \
         --vcpus $VCPUS \
         --disk=size=$DISK,backing_store=$LOCATION/$DISKIMAGE,bus=virtio,format=qcow2 \
@@ -86,7 +92,6 @@ for VM in $IPS; do
     virsh destroy $VMNAME$I
     virsh undefine $VMNAME$I
     virsh vol-delete  $VMNAME$I.qcow2 default
-    virsh vol-delete  $VMNAME$I-1.qcow2 default
     URL="http://$API_HOST/api/zones/records/delete?token=$TOKEN&domain=$A&type=A&value=$VM"
     RESULT=$(curl -s $URL)
 
