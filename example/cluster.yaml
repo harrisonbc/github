@@ -23,4 +23,4 @@ spec:
       - config:
           protect-kernel-defaults: false
     registries: {}
-  kubernetesVersion: v1.24.8+k3s1
+  kubernetesVersion: v1.33.3+rke2r1
