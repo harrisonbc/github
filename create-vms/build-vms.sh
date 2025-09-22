@@ -21,6 +21,7 @@ source variables.env
 # 
 # wget https://rancher.harrison.local/elemental/seedimage/xjdj84sgggjxd9hdw6kh45lhsdktmhxw4tkzf6p89xjlhnk2kctpqt/fire-nodes-2025-09-22T13:27:38Z.iso
 kubectl wait --for=condition=ready pod -n fleet-default fire-img
+kubectl wait --for=condition=ready pod -n fleet-default fire-img
 
 if [ ! -f $LOCATION/$DISKIMAGE ]; then 
 
