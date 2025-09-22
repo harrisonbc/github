@@ -84,13 +84,13 @@ for VM in $IPS; do
 
   if [[ $1 == "destroy" ]]; then
 
-    echo "Unregister $A from scc.suse.com with SUSEconnect"
-    ssh brynn@$A sudo transactional-update register -d 
+#    echo "Unregister $A from scc.suse.com with SUSEconnect"
+#    ssh brynn@$A sudo transactional-update register -d 
 
     echo "Destroy VM $A with MAC Address: $macaddr"
 
     virsh destroy $VMNAME$I
-    virsh undefine $VMNAME$I
+    virsh undefine $VMNAME$I --nvram
     virsh vol-delete  $VMNAME$I.qcow2 default
     URL="http://$API_HOST/api/zones/records/delete?token=$TOKEN&domain=$A&type=A&value=$VM"
     RESULT=$(curl -s $URL)
