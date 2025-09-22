@@ -10,10 +10,11 @@
 ####################################################
 
 
-# Download Seed Image
+# Download Seed Image once it is created
 # 
-wget https://rancher.harrison.local/elemental/seedimage/xjdj84sgggjxd9hdw6kh45lhsdktmhxw4tkzf6p89xjlhnk2kctpqt/fire-nodes-2025-09-22T13:27:38Z.iso
-
+# wget https://rancher.harrison.local/elemental/seedimage/xjdj84sgggjxd9hdw6kh45lhsdktmhxw4tkzf6p89xjlhnk2kctpqt/fire-nodes-2025-09-22T13:27:38Z.iso
+kubectl wait --for=condition=ready pod -n fleet-default fire-img
+wget --no-check-certificate `kubectl get seedimage -n fleet-default fire-img -o jsonpath="{.status.downloadURL}"` -O $LOCATION/$DISKIMAGE
 
 ####################################################
 # Retrieve parameters 
