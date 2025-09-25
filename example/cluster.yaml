@@ -10,7 +10,7 @@ spec:
       profile: null
     machinePools:
       - name: fire-cp-pool
-        quantity: 0
+        quantity: 3
         controlPlaneRole: true
         etcdRole: true
         machineConfigRef:
@@ -19,7 +19,7 @@ spec:
           name: fire-machine-selector
         unhealthyNodeTimeout: 0s
       - name: fire-wkr-pool
-        quantity: 0
+        quantity: 2
         workerRole: true
         machineConfigRef:
           apiVersion: elemental.cattle.io/v1beta1

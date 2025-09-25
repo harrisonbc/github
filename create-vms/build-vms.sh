@@ -25,7 +25,7 @@ kubectl wait --for=condition=ready pod -n fleet-default fire-img
 
 if [ ! -f $LOCATION/$DISKIMAGE ]; then 
 
-    wget --no-check-certificate `kubectl get seedimage -n fleet-default fire-img -o jsonpath="{.status.downloadURL}"` -O $LOCATION/$DISKIMAGE
+   echo wget --no-check-certificate `kubectl get seedimage -n fleet-default fire-img -o jsonpath="{.status.downloadURL}"` -O $LOCATION/$DISKIMAGE
 
 fi
 
