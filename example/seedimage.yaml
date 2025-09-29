@@ -5,7 +5,7 @@ metadata:
   namespace: fleet-default
 spec:
   type: raw
-  baseImage: registry.suse.com/suse/sl-micro/6.0/baremetal-os-container:2.1.1-3.29
+  baseImage: registry.suse.com/suse/sl-micro/6.1/kvm-os-container:2.2.0-4.4
   registrationRef:
     apiVersion: elemental.cattle.io/v1beta1
     kind: MachineRegistration

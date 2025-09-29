@@ -1,0 +1,26 @@
+kind: Cluster
+apiVersion: provisioning.cattle.io/v1
+metadata:
+  name: volcano
+  namespace: fleet-default
+spec:
+  rkeConfig:
+    machineGlobalConfig:
+      etcd-expose-metrics: false
+      profile: null
+    machinePools:
+      - name: fire-all-pool
+        quantity: 1
+        controlPlaneRole: true
+        etcdRole: true
+        workerRole: true
+        machineConfigRef:
+          apiVersion: elemental.cattle.io/v1beta1
+          kind: MachineInventorySelectorTemplate
+          name: fire-machine-selector
+        unhealthyNodeTimeout: 0s
+    machineSelectorConfig:
+      - config:
+          protect-kernel-defaults: false
+    registries: {}
+  kubernetesVersion: v1.33.3+rke2r1
